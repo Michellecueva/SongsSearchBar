@@ -41,6 +41,7 @@ class ViewController: UIViewController {
     var searchString: String? = nil {
         didSet {
             self.songTableView.reloadData()
+    
         }
     }
     
@@ -104,14 +105,40 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ViewController: UISearchBarDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchString = searchBar.text
-        
+        searchString = searchText
+        let doShow = (searchText != "")
+        setsSearchBarFeatures(searchBar: searchBar, showScopeBar: doShow, ShowsCancel: doShow)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        setsSearchBarFeatures(searchBar: searchBar, showScopeBar: true, ShowsCancel: false)
+        searchBar.text = ""
+        searchString = nil
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        setsSearchBarFeatures(searchBar: searchBar, showScopeBar: true, ShowsCancel: true)
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        setsSearchBarFeatures(searchBar: searchBar, showScopeBar: false, ShowsCancel: false)
+        return true
+    }
+    
+    func setsSearchBarFeatures(searchBar: UISearchBar, showScopeBar: Bool, ShowsCancel: Bool) {
+        searchBar.showsScopeBar = showScopeBar
+        searchBar.setShowsCancelButton(ShowsCancel, animated: true)
+        searchBar.sizeToFit()
+    }
+    
+    
 }
 
 
