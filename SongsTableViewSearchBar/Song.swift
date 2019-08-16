@@ -2540,4 +2540,11 @@ class Song {
     }
     
     
+    static func filterBySong(searchString: String) -> [Song] {
+        return loveSongs.filter({$0.name.lowercased().contains(searchString.lowercased())})
+    }
+    
+    static func filterByArtist(searchString: String) -> [Song] {
+        return loveSongs.filter({$0.artist.lowercased().contains(searchString.lowercased())})
+    }
 }

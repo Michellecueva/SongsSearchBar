@@ -27,9 +27,9 @@ class ViewController: UIViewController {
                 let currentScopeIndex = songSearchBar.selectedScopeButtonIndex
                 switch scopeTitles[currentScopeIndex] {
                 case "Songs":
-                    return songs.filter({$0.name.lowercased().contains(searchString.lowercased())})
+                    return Song.filterBySong(searchString: searchString)
                 case "Artist":
-                    return songs.filter({$0.artist.lowercased().contains(searchString.lowercased())})
+                    return Song.filterByArtist(searchString: searchString)
                 default:
                     return songs
                 }
@@ -65,7 +65,6 @@ class ViewController: UIViewController {
         songTableView.delegate = self
         songSearchBar.delegate = self
         resultNotFoundLabel.isHidden = true
-//        updateLabelFrame()
         
     }
 
